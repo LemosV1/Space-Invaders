@@ -25,8 +25,11 @@ sair.y = menuwindow.height - sair.height - 25
 ranking.x = menuwindow.width/2 - ranking.width/2
 ranking.y = sair.y - ranking.height - 25
 
+dificuldade = 1
+
 diff.x = menuwindow.width/2 - diff.width/2
 diff.y = ranking.y - diff.height - 25
+verifica = True
 verifica = True
 dificuldade = 1
 play.x = menuwindow.width/2 - play.width/2
@@ -38,7 +41,6 @@ while True:
     if timePass >= 0.5:
         if mouse.is_over_area([diff.x, diff.y], [diff.x + diff.width, diff.y + diff.height]) and mouse.is_button_pressed(1):
             dificuldade = menu_diff.setdificuldade()
-            verifica = True
             immortal_start_time = time.time()
 
         elif mouse.is_over_area([play.x, play.y], [play.x + play.width, play.y + play.height]) and mouse.is_button_pressed(1):
