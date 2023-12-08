@@ -24,6 +24,8 @@ def startgame(dificuldade):
 
     is_immortal = False
     immortal_start_time = None
+    Parar_start_time = None
+    Parar = False
 
     contaTiro = 0  # Contador tiro
     tiro_monstro = 0
@@ -43,6 +45,7 @@ def startgame(dificuldade):
     vel_tiro_m = 400
     
     monsVel = 100
+    especial = False
 
     vida = Sprite("./sprites/vida.png")
     vet_vida = [Sprite("./sprites/vida.png") for _ in range(3)]
@@ -50,9 +53,10 @@ def startgame(dificuldade):
             vet_vida[i].set_position(150 + i*(vida.width),10)
     
     pontos = 0
+    paralisar = 1
 
     fundo = Sprite("./sprites/bg_menu.png")
-
+    
     clock = pygame.time.Clock()
 
     # GameLoop
@@ -90,9 +94,15 @@ def startgame(dificuldade):
                 l_rand = random.randint(0, len(matMons) - 1)
                 c_rand = random.randint(0, len(matMons[l_rand]) - 1)
                 tiro_M = Sprite("./sprites/bullet.png")
+                tiro_especial = Sprite("./sprites/bulletP.png")
+                tiro_especial.set_position(matMons[l_rand][c_rand].x + matMons[l_rand][c_rand].width/2, matMons[l_rand][c_rand].y - tiro_M.height)
                 tiro_M.set_position(matMons[l_rand][c_rand].x + matMons[l_rand][c_rand].width/2, matMons[l_rand][c_rand].y - tiro_M.height)
-                mtiro.append(tiro_M)
+                if (paralisar%3 != 0): 
+                    mtiro.append(tiro_M)
+                elif (paralisar%3 == 0):
+                    mtiro.append(tiro_especial)
                 tiro_monstro = 0
+                paralisar += 1
         for i in range(len(mtiro)):
             mtiro[i].move_y((vel_tiro_m * dificuldade) * gamewindow.delta_time())
             if mtiro[i].y > gamewindow.height - mtiro[i].height:
@@ -102,14 +112,19 @@ def startgame(dificuldade):
         #Barra de vida
         for i in range(len(mtiro)):
             if not is_immortal and (mtiro[i].collided(player)):
-                is_immortal = True
-                immortal_start_time = time.time()
-                vet_vida.pop()
-                mtiro.pop()
-                player = Sprite("./sprites/player_imortal.png")
-                player.set_position(gamewindow.width/2 - player.width/2, (gamewindow.height - player.height) - 10)
-
-                #imortal por 2 segundos
+                if(mtiro[i] == tiro_especial):
+                    Parar = True
+                    Parar_start_time = time.time()
+                    vel_player = 0
+                    mtiro.pop()
+                else:
+                    is_immortal = True
+                    immortal_start_time = time.time()
+                    vet_vida.pop()
+                    mtiro.pop()
+                    player = Sprite("./sprites/player_imortal.png")
+                    player.set_position(gamewindow.width/2 - player.width/2, (gamewindow.height - player.height) - 10)
+            #imortal por 2 segundos
             if is_immortal:
                 timePass = time.time() - immortal_start_time
                 if timePass >= 2:
@@ -194,9 +209,14 @@ def startgame(dificuldade):
         vtiro = new_vtiro
         matMons = [row for row in matMons if row]
 
-        
+
                             
         # Movimento player
+        if Parar:
+                timePass = time.time() - Parar_start_time
+                if timePass >= 2:
+                    vel_player = 200
+                    Parar = False
         player.move_key_x(vel_player * gamewindow.delta_time())
 
         if player.x < 0:
