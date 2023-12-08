@@ -25,9 +25,11 @@ sair.y = menuwindow.height - sair.height - 25
 ranking.x = menuwindow.width/2 - ranking.width/2
 ranking.y = sair.y - ranking.height - 25
 
+dificuldade = 1
+
 diff.x = menuwindow.width/2 - diff.width/2
 diff.y = ranking.y - diff.height - 25
-verifica = False
+verifica = True
 play.x = menuwindow.width/2 - play.width/2
 play.y = diff.y - play.height - 25
 immortal_start_time = time.time()
