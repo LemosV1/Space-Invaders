@@ -9,3 +9,4 @@ teste 6 = 120
 & C:/Users/Dell/AppData/Local/Programs/Python/Python311/python.exe "c:/Users/Dell/Desktop/VS CODE/space invaders/main.py" = 0
 & C:/Users/Dell/AppData/Local/Programs/Python/Python311/python.exe "c:/Users/Dell/Desktop/VS CODE/space invaders/main.py" = 0
 & C:/Users/Dell/AppData/Local/Programs/Python/Python311/python.exe "c:/Users/Dell/Desktop/VS CODE/space invaders/main.py" = 0
+alksndlaksjndlakjsdbnalksd = 0

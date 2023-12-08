@@ -27,14 +27,14 @@ ranking.y = sair.y - ranking.height - 25
 
 diff.x = menuwindow.width/2 - diff.width/2
 diff.y = ranking.y - diff.height - 25
-verifica = False
+verifica = True
+dificuldade = 1
 play.x = menuwindow.width/2 - play.width/2
 play.y = diff.y - play.height - 25
 immortal_start_time = time.time()
 # Loop
 while True:
     timePass = time.time() - immortal_start_time
-    print(timePass)
     if timePass >= 0.5:
         if mouse.is_over_area([diff.x, diff.y], [diff.x + diff.width, diff.y + diff.height]) and mouse.is_button_pressed(1):
             dificuldade = menu_diff.setdificuldade()

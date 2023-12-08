@@ -141,21 +141,33 @@ def startgame(dificuldade):
                 elif (monster.x > rightmost.x):
                     rightmost = monster
                 elif (monster.y > bottom.y):
-                    bottom = monster      
+                    bottom = monster    
+
         for i in range(len(matMons)):
             for j in range(len(matMons[i])):
                 matMons[i][j].move_x((monsVel * dificuldade) * gamewindow.delta_time())
-        if leftmost.x <= 0:
+
+        if leftmost.x < 0:
             monsVel *= -1
+            deltax = -leftmost.x
             for i in range(len(matMons)):
                     for j in range(len(matMons[i])):
-                        matMons[i][j].set_position(matMons[i][j].x, matMons[i][j].y+ matMons[i][j].height)
-        if rightmost.x + rightmost.width -10 >= gamewindow.width -10:
+                        matMons[i][j].set_position(
+                            matMons[i][j].x + 2 * deltax,
+                            matMons[i][j].y + matMons[i][j].height
+                        )
+
+        elif rightmost.x + rightmost.width > gamewindow.width:
             monsVel *= -1
+            deltax = (rightmost.x + rightmost.width) - gamewindow.width
             for i in range(len(matMons)):
                     for j in range(len(matMons[i])):
-                        matMons[i][j].set_position(matMons[i][j].x, matMons[i][j].y+ matMons[i][j].height)
-        if matMons[-1][-1].y + matMons[-1][-1].height>=  (gamewindow.height - player.height) - 10:
+                        matMons[i][j].set_position(
+                            matMons[i][j].x - 2 * deltax,
+                            matMons[i][j].y + matMons[i][j].height
+                        )
+                        
+        if matMons[-1][-1].y + matMons[-1][-1].height >=  (gamewindow.height - player.height) - 10:
             file = open('Ranking.txt','a+')
             n = str(input())
             file.write('{} = {}\n'.format(n, pontos))
